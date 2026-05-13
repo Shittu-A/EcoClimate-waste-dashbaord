@@ -20,12 +20,12 @@ export default function StatsCards({ data, total }: Props) {
   ]
 
   return (
-    <div className="p-4 grid grid-cols-2 gap-2 border-b border-gray-800 shrink-0">
+    <div className="p-4 grid grid-cols-2 gap-2 border-b border-gray-200 shrink-0">
       {cards.map(({ label, value, sub }) => (
-        <div key={label} className="bg-gray-800 rounded-lg p-3">
-          <div className="text-xl font-bold text-white">{value}</div>
-          <div className="text-xs font-medium text-gray-300 mt-0.5">{label}</div>
-          <div className="text-xs text-gray-500 mt-0.5">{sub}</div>
+        <div key={label} className="bg-gray-50 rounded-lg p-3 border border-gray-200">
+          <div className="text-xl font-bold text-gray-900">{value}</div>
+          <div className="text-xs font-medium text-gray-600 mt-0.5">{label}</div>
+          <div className="text-xs text-gray-400 mt-0.5">{sub}</div>
         </div>
       ))}
     </div>

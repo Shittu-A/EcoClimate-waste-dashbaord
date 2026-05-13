@@ -5,23 +5,23 @@ import { countByField, type FeatureCollection } from '@/lib/data'
 interface Props { data: FeatureCollection }
 
 const TOOLTIP_STYLE = {
-  background: '#1f2937',
-  border: '1px solid #374151',
+  background: '#ffffff',
+  border: '1px solid #e5e7eb',
   borderRadius: 6,
   fontSize: 12,
-  color: '#fff',
+  color: '#111827',
 }
 
 export default function SitesByStateChart({ data }: Props) {
   const chartData = countByField(data, 'state_name').slice(0, 15).reverse()
 
   return (
-    <div className="p-4 border-b border-gray-800">
-      <h3 className="text-xs font-semibold text-gray-400 uppercase tracking-wide mb-3">
-        Sites by State <span className="text-gray-600 font-normal">(top 15)</span>
+    <div className="p-4 border-b border-gray-200">
+      <h3 className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-3">
+        Sites by State <span className="text-gray-400 font-normal">(top 15)</span>
       </h3>
       {chartData.length === 0 ? (
-        <p className="text-gray-600 text-xs">No data</p>
+        <p className="text-gray-400 text-xs">No data</p>
       ) : (
         <ResponsiveContainer width="100%" height={270}>
           <BarChart data={chartData} layout="vertical" margin={{ left: 0, right: 20, top: 0, bottom: 0 }}>
@@ -34,14 +34,14 @@ export default function SitesByStateChart({ data }: Props) {
             <YAxis
               type="category"
               dataKey="name"
-              tick={{ fontSize: 10, fill: '#9ca3af' }}
+              tick={{ fontSize: 10, fill: '#374151' }}
               width={85}
               axisLine={false}
               tickLine={false}
             />
             <Tooltip
               contentStyle={TOOLTIP_STYLE}
-              cursor={{ fill: 'rgba(255,255,255,0.04)' }}
+              cursor={{ fill: 'rgba(0,0,0,0.04)' }}
               formatter={(v: number) => [v.toLocaleString(), 'Sites']}
             />
             <Bar dataKey="count" radius={[0, 3, 3, 0]}>

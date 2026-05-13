@@ -8,9 +8,10 @@ html, body, #__next {
   padding: 0;
 }
 
-/* Override maplibre popup default white padding */
+/* Override maplibre popup default padding */
 .maplibregl-popup-content {
   padding: 10px 12px !important;
   border-radius: 8px !important;
-  box-shadow: 0 4px 20px rgba(0,0,0,0.4) !important;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.15) !important;
+  border: 1px solid #e5e7eb !important;
 }

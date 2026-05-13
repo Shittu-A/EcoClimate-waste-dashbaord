@@ -1,23 +1,18 @@
 export interface DumpSiteProps {
-  id: number
-  global_id: string
-  name: string | null
-  type: string | null
-  ownership: string | null
-  ward_code: string | null
-  category: string | null
-  timestamp: string | null
-  lga_name: string | null
-  state_code: string | null
-  state_name: string | null
+  name:        string | null
+  type:        string | null
+  category:    string | null
+  state_name:  string | null
+  lga_name:    string | null
+  ownership:   string | null
+  source:      string | null
+  survey_date: string | null
+  description: string | null
 }
 
 export interface DumpSiteFeature {
   type: 'Feature'
-  geometry: {
-    type: 'Point'
-    coordinates: [number, number]
-  }
+  geometry: { type: 'Point'; coordinates: [number, number] }
   properties: DumpSiteProps
 }
 
@@ -27,9 +22,10 @@ export interface FeatureCollection {
 }
 
 export interface Filters {
-  state: string
-  type: string
+  state:    string
+  type:     string
   category: string
+  source:   string
 }
 
 export const EMPTY_FC: FeatureCollection = { type: 'FeatureCollection', features: [] }
@@ -37,7 +33,6 @@ export const EMPTY_FC: FeatureCollection = { type: 'FeatureCollection', features
 export async function loadData(): Promise<FeatureCollection> {
   const res = await fetch('/nigeria_dumpsites.geojson')
   const raw = await res.json()
-  // Drop features with null/invalid geometry
   raw.features = raw.features.filter(
     (f: DumpSiteFeature) =>
       f.geometry &&
@@ -52,9 +47,10 @@ export async function loadData(): Promise<FeatureCollection> {
 export function applyFilters(fc: FeatureCollection, filters: Filters): FeatureCollection {
   const features = fc.features.filter(f => {
     const p = f.properties
-    if (filters.state !== 'all' && p.state_name !== filters.state) return false
-    if (filters.type !== 'all' && (p.type ?? 'Unknown') !== filters.type) return false
-    if (filters.category !== 'all' && (p.category ?? 'Unknown') !== filters.category) return false
+    if (filters.state    !== 'all' && p.state_name !== filters.state)                         return false
+    if (filters.type     !== 'all' && (p.type     ?? 'Unknown') !== filters.type)             return false
+    if (filters.category !== 'all' && (p.category ?? 'Unknown') !== filters.category)         return false
+    if (filters.source   !== 'all' && (p.source   ?? 'Unknown') !== filters.source)           return false
     return true
   })
   return { ...fc, features }
@@ -69,7 +65,10 @@ export function getUniqueValues(fc: FeatureCollection, field: keyof DumpSiteProp
   return Array.from(set).sort()
 }
 
-export function countByField(fc: FeatureCollection, field: keyof DumpSiteProps): { name: string; count: number }[] {
+export function countByField(
+  fc: FeatureCollection,
+  field: keyof DumpSiteProps,
+): { name: string; count: number }[] {
   const counts: Record<string, number> = {}
   fc.features.forEach(f => {
     const val = String(f.properties[field] ?? 'Unknown')

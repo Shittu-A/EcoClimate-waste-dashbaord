@@ -11,11 +11,11 @@ const COLORS: Record<string, string> = {
 }
 
 const TOOLTIP_STYLE = {
-  background: '#1f2937',
-  border: '1px solid #374151',
+  background: '#ffffff',
+  border: '1px solid #e5e7eb',
   borderRadius: 6,
   fontSize: 12,
-  color: '#fff',
+  color: '#111827',
 }
 
 export default function TypeBreakdown({ data }: Props) {
@@ -23,7 +23,7 @@ export default function TypeBreakdown({ data }: Props) {
 
   return (
     <div className="p-4">
-      <h3 className="text-xs font-semibold text-gray-400 uppercase tracking-wide mb-1">
+      <h3 className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-1">
         Official vs Unofficial
       </h3>
       {chartData.length === 0 ? (
@@ -53,7 +53,7 @@ export default function TypeBreakdown({ data }: Props) {
               iconType="circle"
               iconSize={8}
               formatter={(value) => (
-                <span style={{ color: '#d1d5db', fontSize: 11 }}>{value}</span>
+                <span style={{ color: '#374151', fontSize: 11 }}>{value}</span>
               )}
             />
           </PieChart>
